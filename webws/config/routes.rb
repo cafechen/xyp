@@ -1,29 +1,5 @@
 Webmba::Application.routes.draw do
-
-  get "web/index"
-
-  get "web/home"
-
-  get "web/login"
   
-  get "web/logout"
-  
-  get "web/register"
-  
-  get "web/query"
-  
-  get "web/ejoin"
-  
-  get "web/efollow"
-  
-  get "web/ojoin"
-  
-  get "web/ofollow"
-  
-  get "web/create_org"
-  
-  post "web/submit"
-
   post "webservice/query"
   
   # The priority is based upon order of creation:
