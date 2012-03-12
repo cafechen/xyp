@@ -1,0 +1,147 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-create-event -t <title> " 
+
+command_desc={"cmd"=>"create-event",
+               "opts"=> {
+               "title"=>["t",1,""],
+               "place"=>["p",1,""],
+               "org" => ["s",1,""],
+               "speaker"=>["o",1,""],
+               "speakerInfo"=>["i",1,""],
+               "sponsor"=>["n",1,""],
+               "undertaker"=>["u",1,""],
+               "cooperater"=>["c",1,""],
+               "seat"=>["e",1,""],
+               "brief"=>["b",1,""],
+               "toward"=>["f",1,""],
+               "others"=>["h",1,""],
+               "beginTime"=>["a",1,""],
+               "endTime"=>["d",1,""]}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--title', '-t', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--place', '-p', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--speaker', '-s', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--org', '-o', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--speakerInfo', '-i', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--sponsor', '-n', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--undertaker', '-u', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--cooperater', '-c', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--seat', '-e', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--brief', '-b', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--toward', '-f', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--others', '-h', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--beginTime', '-a', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--endTime', '-d', GetoptLong::REQUIRED_ARGUMENT ]
+
+)
+
+title = nil
+place = nil
+speaker = nil
+org = nil
+speakerInfo = nil
+sponsor = nil
+undertaker = nil
+cooperater = nil
+seat = nil
+brief = nil
+toward = nil
+others = nil
+beginTime = nil
+endTime = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--title'
+        title = arg
+      when '--place'
+        place = arg
+      when '--speaker'
+        speaker = arg
+      when '--org'
+        org = arg
+      when '--speakerInfo'
+        speakerInfo = arg
+      when '--sponsor'
+        sponsor = arg
+      when '--undertaker'
+        undertaker = arg
+      when '--cooperater'
+        cooperater = arg
+      when '--seat'
+        seat = arg
+      when '--brief'
+        brief = arg
+      when '--toward'
+        toward = arg
+      when '--others'
+        others = arg
+      when '--beginTime'
+        beginTime = arg
+      when '--endTime'
+        endTime = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if title.nil? or org.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+event = {
+	"title" => title,
+	"place" => place,
+	"speaker" => speaker,
+	"org" => org,
+	"speakerInfo" => speakerInfo,
+	"sponsor" => sponsor,
+	"undertaker" => undertaker,
+	"cooperater" => cooperater,
+	"seat" => seat,
+	"brief" => brief,
+	"toward" => toward,
+	"others" => others,
+	"beginTime" => beginTime,
+	"endTime" => endTime
+}
+
+resp = ws.create_event(event)
+
+if resp.size == 0
+  Client_Utils.print_msg("create_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_EVENT_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

@@ -1,0 +1,6 @@
+./ws-register-user -n 陈健 -m 18611186171 -p chenjian -e chenjian945@gmail.com -w 0 -s 清华大学 -c IBM -t 软件工程师 -i 我在创业!
+./ws-register-user -n 陈健 -m 18611186171 -p chenjian -e stevenchen945@qq.com -w 0 -s 清华大学 -c IBM -t 软件工程师 -i 我在创业!
+./ws-create-orgtype -n 俱乐部
+./ws-create-org -n 创投俱乐部 -t 1
+./ws-create-event -a '2012-03-06 18:00:00' -o 1 -h 没有 -t 淘宝大学 -f 0 -i 没啥介绍 -s 1 -e 100 -c 承办方 -n 主办方 -d '2012-03-06 21:00:00' -b 没啥简介 -p 清华大学 -u 协办方
+./ws-create-event -a '2012-03-06 18:00:00' -o 1 -h 没有 -t 创业宣讲 -f 0 -i 没啥介绍 -s 1 -e 100 -c 承办方 -n 主办方 -d '2012-03-06 21:00:00' -b 没啥简介 -p 清华大学 -u 协办方

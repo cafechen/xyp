@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-describe-orgtypes" 
+
+command_desc={"cmd"=>"describe-roles",
+               "opts"=> {}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+ws = WSAdapter.new()
+
+resp = ws.describe_roles() 
+
+if resp.size == 0
+  Client_Utils.print_msg("describe_none")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_ROLE_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

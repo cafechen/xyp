@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-describe-events" 
+
+command_desc={"cmd"=>"describe-events",
+               "opts"=> {"filter"=>["f",1,""]}}
+
+opts = GetoptLong.new(
+[ '--filter', '-f', GetoptLong::REQUIRED_ARGUMENT]
+)
+
+filter = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--filter'
+        filter = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+resp = ws.describe_events(filter) 
+
+if resp.size == 0
+  Client_Utils.print_msg("describe_none")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_EVENT_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

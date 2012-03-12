@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-unfollow-org -o <org_id> " 
+
+command_desc={"cmd"=>"unfollow-org",
+               "opts"=> {"org_id"=>["o",1,""]}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--org_id', '-o', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+org_id = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--org_id'
+        org_id = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if org_id.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+resp = ws.unfollow_org(org_id)
+
+if resp.size == 0
+  Client_Utils.print_msg("unfollow_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  Client_Utils.print_msg("unfollow_success")
+  exit_code = 0
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

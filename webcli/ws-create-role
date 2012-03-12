@@ -1,0 +1,67 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-create-orgtype -n <name> -t <type>" 
+
+command_desc={"cmd"=>"create-role",
+               "opts"=> {"name"=>["n",1,""], "type"=>["t",1,""]}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--name', '-n', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--type', '-t', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+name = nil
+type = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--name'
+        name = arg
+      when '--type'
+        type = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if name.nil? or type.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+resp = ws.create_role(name,type)
+
+if resp.size == 0
+  Client_Utils.print_msg("create_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_ORGTYPE_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

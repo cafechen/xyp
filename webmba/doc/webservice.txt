@@ -1,0 +1,163 @@
+(1)DescribeEvents 列举所有的活动
+Request	
+{
+	"cmd": "describe_events",
+	"email": "xx@xx.xx",
+	"password": "xxxxxx", #将来也许根据用户权限返回活动列表
+	"filter": "xxx", #如果填写这个字段，则根据该字段将结果做过滤
+}
+Response
+[
+	{
+		"eventId" : "00001",
+		"title": "淘宝大学系列讲座",
+		"schoolId": "xxx",
+  	"schoolName": "清华大学",
+   	"clubId": "xxx",
+   	"clubName": "创投俱乐部",
+		"constitutor": "张三",
+   	"local": "清华大学伟伦楼419",
+   	"beginTime": "2011-12-09T19:00:00",
+   	"endTime": "2011-12-09T21:00:00",
+   	"speaker": "淘宝大学",
+   	"seat": "27/60/30", #使用/做分割，报名27人，关注60人，席位30人
+		"introduction": "淘宝大学是...，本讲座针对....人群，重点介绍了...",
+		"status": "doing" #正在报名 doing 报名结束 done
+		"authentication": "all" #面向所有人 all 面向俱乐部成员 restrict
+		"other": "" #其它备注信息
+ 	},
+ 	...
+]
+(2) JoinEvent
+Request	
+{
+	"cmd":"join_event",
+	"eventId":"00001",
+	"email":"xx@xx.xx",
+	"password":"xxx"
+}
+Response
+{
+  "eventId": "00001",
+  "result": "0", # 0-成功 1-失败
+  "errorCode": "xxx",
+  "error": "因为xxx原因，加入失败" #该字段只有当失败的时候才返回
+}
+(3) ExitEvent
+Request	
+{
+	"cmd":"exit_event",
+	"eventId":"00001",
+	"email":"xx@xx.xx"
+	"password":"xxx"
+}
+Response
+{
+	"eventId": "00001",
+ 	"result": "0" # 0-成功 1-失败
+ 	"errorCode": "xxx"
+ 	"error": "因为xxx原因，加入失败" #该字段只有当失败的时候才返回
+}
+(4)DescribeSchools 得到可以供筛选活动的学校名称信息)
+Request
+{
+	"cmd":"describe_schools"
+}
+Response
+[
+	{"schoolId": "xxx", "schoolName": "清华大学"},
+	{"schoolId": "xxx", "schoolName": "北京大学"}
+]
+(5)DescribeUser(登录并返回用户已报名的活动)
+Request	
+{
+	"cmd":"describe_user",
+	"email":"xxx",
+	"password":"xxxxx",
+	"mobile":"xxxxxxxxxxx" #如果提供手机号码，忽略userid和password，直接返回用户信息
+}
+Response
+{
+	"email": "xx@xx.xx",
+	... #将来会返回用户的所有注册信息，比如年龄，学校等等
+	"result": "0", # 0-成功 1-失败
+	"errorCode": "",
+  "error": "密码不正确，用户名不正确等等" #该字段只有当失败的时候才返回
+}
+(6) RegisterUser(注册信息)
+Request	
+{
+	"cmd":"register_user",
+	"email":"xx@xx.xx",
+	"password":"xxxxxx"
+	"mobile":"1234567890" #可以为空
+	"workstate":"0" # 0-在读MBA, 1-在读硕(博）士, 2-在读本科生, 3-工作, 4-其他
+	"company":"xxx公司" #也可以填学校
+}
+Response
+{
+	"result": "0" # 0-成功 1-失败(信息重复)
+	"errorCode": "xxxx",
+	"error": "xxx"
+}
+(7)FollowEvent（关注活动）
+Request	
+{
+	"cmd":"follow_event",
+	"eventId":"00001",
+	"email":"xx@xx.xx",
+	"password":"xxxx"
+}
+Response
+{
+	"eventId": "00001",
+	"result": "0", # 0-成功 1-失败
+	"errorCode": "xxxx",
+	"error" "xxxxxxxxxx"
+}
+(8) describe_joins（通过活动ID得到报名情况）
+	Request	
+{
+	"cmd":"describe_joins",
+	"eventId":"00001",
+	"email": "xxxx",
+	"password": "xxxx"
+}
+Response
+[
+	{
+		"email":"xxx",
+		"name":"xxx",
+		"school":"xxx"
+		... 此处为该用户的部分信息
+	},
+	{
+		"email":"xxx",
+		"name":"xxx",
+		"school":"xxx"
+		... 此处为该用户的部分信息
+	}
+]
+(9) describe_follows
+Request	
+{
+	"cmd": "describe_follows",
+	"eventId": "00001",
+	"email": "xxx",
+	"password": "xxxxx"
+}
+Response
+[
+	{
+		"email":"xxx",
+		"name":"xxx",
+		"school":"xxx"
+		... 此处为该用户的部分信息
+	},
+	{
+		"email":"xxx",
+		"name":"xxx",
+		"school":"xxx"
+		... 此处为该用户的部分信息
+	}
+]

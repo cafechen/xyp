@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-describe-user-by-mobile -m <mobile>" 
+
+command_desc={"cmd"=>"ws-describe-user-by-mobile",
+               "opts"=> {"mobile"=>["m",1,""]}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--mobile', '-m', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+mobile = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--mobile'
+        mobile = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if mobile.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+resp = ws.describe_user_by_mobile(mobile)
+
+if resp.size == 0
+  Client_Utils.print_msg("describe_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_USER_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

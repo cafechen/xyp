@@ -1,0 +1,30 @@
+rails generate migration add_fieldname_to_tablename fieldname:string
+rails generate migration add_org_type_to_org org_type:integer
+
+
+rails generate scaffold User name:string email:string password:string
+rails generate scaffold Event school:string club:string title:string location:string beginTime:time speaker:string total_seat:integer signed_seat:integer details:text
+rails generate scaffold Organization name:string city:string members:integer fans:integer createTime:datetime org_type_id:integer
+rails generate scaffold OrgType name:string
+rails generate scaffold RoleType role_type:string
+rails generate scaffold Role name:string role_type_id:integer org_id:integer
+rails generate scaffold UserOrg user_id:integer org_id:integer role_id:integer
+rails generate scaffold UserEvent user_id:integer event_id:integer status:integer
+
+rails generate controller query
+rails generate jquery:install --ui --force
+rails generate model User name:string email:string password:string mobile:string
+rails generate model Org name:string type:string
+rails generate model OrgType name:string
+rails generate migration add_mobile_to_user mobile:string
+rails generate model Org name:string type:integer
+rails generate model Role name:string role_type:integer
+rails generate model Org name:string org_type:integer
+rails generate model UserOrg user_id:integer org_id:integer role_id:integer
+rails generate model EventType name:string
+rails generate model School school_code:integer school_name:string
+rails generate model Event title:string place:string beginTime:time endTime:time speaker:string
+rails generate model UserEvent user_id:integer event_id:integer status:integer
+rails generate model Company name:string
+rails generate model Title name:string
+rails generate model School name:string

@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-delete-orgtype -o <orgTypeId>" 
+
+command_desc={"cmd"=>"delete-orgtype",
+               "opts"=> { "orgTypeId"=>["o",1,""]}}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--orgTypeId', '-o', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+orgTypeId = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--orgTypeId'
+        orgTypeId = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if orgTypeId.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+resp = ws.delete_orgtype(orgTypeId)
+
+if resp.size == 0
+  Client_Utils.print_msg("delete_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4
+else 
+  if resp.first["result"] == "deleted"
+  	Client_Utils.print_msg("delete_success")	        
+     exit_code = 0
+  else
+  	Client_Utils.print_msg("delete_error")	        
+     exit_code = 3
+  end
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

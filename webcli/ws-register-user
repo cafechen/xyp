@@ -1,0 +1,116 @@
+#!/usr/bin/env ruby
+
+FILEDIR = File.dirname(__FILE__)
+require "getoptlong"
+require FILEDIR + "/ws-config"
+require FILEDIR + "/deps/client_utils"
+require FILEDIR + "/deps/ws_adapter"
+
+#USAGE = "USAGE: ws-register-user -e <email> -p <password> -m <mobile> -n <name> -w <workstate> -s <school> -c <company> -t <title> -i <intro>" 
+
+command_desc={"cmd"=>"register-user",
+               "opts"=> { 
+               	"email"=>["e",1,""],
+               	"password"=>["p",1,""],
+               	"mobile"=>["m",1,""],
+               	"name"=>["n",1,""],
+               	"workstate"=>["w",1,""],
+               	"school"=>["s",1,""],
+               	"company"=>["c",1,""],
+               	"title"=>["t",1,""],
+               	"intro"=>["i",1,""] }}
+
+USAGE = Client_Utils.generate_usage(command_desc)
+
+if ARGV[0] == "--help" or ARGV[0] == "-h"
+	puts USAGE
+	exit 0
+end
+
+opts = GetoptLong.new(
+[ '--email', '-e', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--password', '-p', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--mobile', '-m', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--name', '-n', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--workstate', '-w', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--school', '-s', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--company', '-c', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--title', '-t', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--intro', '-i', GetoptLong::REQUIRED_ARGUMENT ]
+)
+
+email = nil
+password = nil
+mobile = nil
+name = nil
+workstate = nil
+school = nil
+company = nil
+title = nil
+intro = nil
+
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--email'
+        email = arg
+      when '--password'
+        password = arg
+      when '--mobile'
+        mobile = arg
+      when '--name'
+        name = arg
+      when '--workstate'
+        workstate = arg
+      when '--school'
+        school = arg
+      when '--company'
+        company = arg
+      when '--title'
+        title = arg
+      when '--intro'
+        intro = arg
+    end
+  end
+rescue GetoptLong::InvalidOption
+  puts USAGE
+  exit 1
+rescue GetoptLong::MissingArgument
+  puts  USAGE
+  exit 1
+end
+
+if email.nil? or password.nil? or name.nil?
+  puts USAGE
+  exit 1
+end
+
+ws = WSAdapter.new()
+
+user = {
+	"email" => email,
+	"password" => password,
+	"name" => name,
+	"mobile" => mobile,
+	"workstate" => workstate,
+	"school" => school,
+	"company" => company,
+	"title" => title,
+	"intro" => intro
+}
+
+resp = ws.register_user(user)
+
+if resp.size == 0
+  Client_Utils.print_msg("create_fail")	
+  exit_code = 0
+elsif resp.first["error"] != nil
+  Client_Utils.print_reason(resp.first)
+  exit_code = 4   
+else 
+  exit_code = Client_Utils.print_table(resp, WS_USER_DISPLAY, true)
+end 
+
+Client_Utils.print_msg("transaction_complete")
+exit(exit_code)
+

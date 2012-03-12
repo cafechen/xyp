@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export WS_ENDPOINT="http://localhost:3000/webservice/query"
+export WS_EMAIL="chenjian945@gmail.com"
+export WS_PASSWORD="b4ed99c0de60df97c9ef2fb8b700778d"
+export WS_TIMEOUT="40"

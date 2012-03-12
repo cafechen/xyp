@@ -1,0 +1,87 @@
+<%if cookies[:userid].nil? %>
+<div>
+	<ol style="list-style: none; height: 20px;">
+		<li style="float:right">
+			<%= link_to '登陆',  {:controller => "web", :action => "login"}%>
+		</li>
+		<li style="float:right">
+			<%= link_to '注册',  {:controller => "web", :action => "register"}%>
+		</li>
+	</ol>
+</div>
+<% elsif%>
+<div>
+	<ol style="list-style: none; height: 20px;">
+		<li style="float:right">
+			<%= cookies[:username] %>
+		</li>
+		<li style="float:right">
+			<%= link_to '注销',  {:controller => "web", :action => "logout"}%>		
+		</li>
+	</ol>
+</div>
+<% end %>
+
+<div style="width: 950px;margin: 0 auto; height: 20px; text-align: center;">
+	<a href="/web/index"><span>首页</span></a>
+	<a href="/web/home"><span>进入我的首页</span></a>
+	<span>团体:</span>
+	<a href="#"><span>进入我的团体</span></a>
+	<a href="#"><span>创建团体</span>
+	<a href="#"><span>寻找团体</span></a>
+	<span>活动:</span>
+	<a href="#"><span>进入我的活动</span></a>
+	<a href="#"><span>创建活动</span>
+	<a href="#"><span>寻找活动</span></a>
+</div>
+
+<div style="width: 950px; margin: 0 auto;">
+	<h3>我关注的活动列表</h3>
+	<table style="width: 900px; text-align: center;">
+  <tr>
+    <th>学校</th>
+    <th>团体</th>
+    <th>活动</th>
+    <th>地点</th>
+    <th>演讲者</th>
+  </tr>
+
+<% @user['join_events'].each do |event| %>
+  <tr>
+    <td><%= event.school_name %></td>
+    <td><%= event.org_name %></td>
+    <td><%= event.title %></td>
+    <td><%= event.place %></td>
+    <td><%= event.speaker %></td>  
+  </tr>
+<% end %>
+
+</table>
+
+</div>
+
+<div style="width: 950px; margin: 0 auto;">
+	<h3>我参加的活动列表</h3>
+	<table style="width: 900px; text-align: center;">
+  <tr>
+    <th>学校</th>
+    <th>团体</th>
+    <th>活动</th>
+    <th>地点</th>
+    <th>演讲者</th>
+  </tr>
+
+<% @user['follow_events'].each do |event| %>
+  <tr>
+    <td><%= event.school_name %></td>
+    <td><%= event.org_name %></td>
+    <td><%= event.title %></td>
+    <td><%= event.place %></td>
+    <td><%= event.speaker %></td>  
+  </tr>
+<% end %>
+
+</table>
+
+</div>
+

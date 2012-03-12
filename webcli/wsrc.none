@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export WS_ENDPOINT="http://localhost:3000/webservice/query"
+export WS_TIMEOUT="40"
