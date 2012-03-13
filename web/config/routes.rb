@@ -1,5 +1,9 @@
 Webmba::Application.routes.draw do
   
+  post 'web/_stats'
+  
+  get 'web/grid_events'
+  
   post "webservice/query"
   
   # The priority is based upon order of creation:

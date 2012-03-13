@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>学院派</title>
+		<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="学院派" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link href="/stylesheets/bundles/github.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/bundles/github2.css" media="screen" rel="stylesheet" type="text/css" />
+		<script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<script src="/js/github.js" type="text/javascript"></script>
+	</head>
+	<body class="logged_in page-dashboard   env-production " data-blob-contribs-enabled="yes">
+		<div id="header" class="true clearfix">
+			<div class="container clearfix">
+				<div class="topsearch ">
+					<form action="/search" id="top_search_form" method="get">
+						<div class="search placeholder-field js-placeholder-field">
+							<label class="placeholder" for="global-search-field">搜索…</label>
+							<input type="text" class="search my_repos_autocompleter" id="global-search-field" name="q" results="5" spellcheck="false" autocomplete="off" data-autocomplete="my-repos-autocomplete">
+							<div id="my-repos-autocomplete" class="autocomplete-results">
+								<ul class="js-navigation-container"></ul>
+							</div>
+							<input type="submit" value="Search" class="button">
+						</div>
+						<input type="hidden" name="type" value="Everything" />
+						<input type="hidden" name="repo" value="" />
+						<input type="hidden" name="langOverride" value="" />
+						<input type="hidden" name="start_value" value="1" />
+					</form>
+				</div>
+				<ul class="top-nav logged_out">
+       		<li class="login"><a href="https://github.com/login">登陆</a></li>
+       		<li class="login"><a href="https://github.com/login">注册</a></li>
+    		</ul>
+			</div>
+		</div>
+		            
+		<div id="login" class="login_form">
+		<form action="/session" method="post">
+			<div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="k+7/q3ZzVAKNFFNapXfLnMxdsNL2X8wKN+mOxgq7pPM=" /></div>
+			<h1>登陆</h1>
+		    <div class="formbody">
+		        
+		        <label for="login_field">
+		          邮箱<br />
+		          <input autocapitalize="off" class="text" id="login_field" name="login" style="width: 21em;" tabindex="1" type="text" />
+		        </label>
+		
+		        <label for="password">
+		          密码
+		          <br />
+		          <input autocomplete="disabled" class="text" id="password" name="password" style="width: 21em;" tabindex="2" type="password" value="" />
+		        </label>
+		
+		        <label class='submit_btn'>
+		        	<input name="commit" tabindex="3" type="submit" value="登陆" />
+		        </label>
+		    </div>
+		</form>
+		</div>
+
+		<div class="ajax-error-message">
+			<p>
+				<span class="icon"></span> Something went wrong with that request. Please try again. <a href="javascript:;" class="ajax-error-dismiss">Dismiss</a>
+			</p>
+		</div>
+	</body>
+</html>
