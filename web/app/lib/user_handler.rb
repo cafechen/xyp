@@ -87,47 +87,53 @@ module UserHandler
     @user.title = user['title'] unless user['title'].nil?
     @user.intro = user['intro'] unless user['intro'].nil?
     
-    @school = School.find_by_name(@user.school) unless @user.school.nil?
-    if @user.school.nil? == false and @school.nil?
-      @school = School.new
-      @school.name = @user.school
-      unless @school.save
-        error_msg = ""
-        @school.errors.full_messages.each do |msg|
-          error_msg = msg
+    unless @user.school.nil? or @user.school.empty?
+      @school = School.find_by_name(@user.school)
+      if @user.school.nil? == false and @school.nil?
+        @school = School.new
+        @school.name = @user.school
+        unless @school.save
+          error_msg = ""
+          @school.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
         end
-        resp = [{"error" => error_msg}]
       end
+      @user.school_id = @school.id ;
     end
-    @user.school_id = @school.id ;
     
-    @company = Company.find_by_name(@user.company) unless @user.company.nil?
-    if @user.company.nil? == false and @company.nil?
-      @company = Company.new
-      @company.name = @user.company
-      unless @company.save
-        error_msg = ""
-        @company.errors.full_messages.each do |msg|
-          error_msg = msg
+    unless @user.company.nil? or @user.company.empty?
+      @company = Company.find_by_name(@user.company) unless @user.company.nil?
+      if @user.company.nil? == false and @company.nil?
+        @company = Company.new
+        @company.name = @user.company
+        unless @company.save
+          error_msg = ""
+          @company.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
         end
-        resp = [{"error" => error_msg}]
       end
+      @user.company_id = @company.id
     end
-    @user.company_id = @company.id
 
-    @title = Title.find_by_name(@user.title) unless @user.title.nil?
-    if @user.title.nil? == false and @title.nil?
-      @title = Title.new
-      @title.name = @user.title
-      unless @title.save
-        error_msg = ""
-        @title.errors.full_messages.each do |msg|
-          error_msg = msg
+    unless @user.title.nil? or @user.title.empty?
+      @title = Title.find_by_name(@user.title) unless @user.title.nil?
+      if @user.title.nil? == false and @title.nil?
+        @title = Title.new
+        @title.name = @user.title
+        unless @title.save
+          error_msg = ""
+          @title.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
         end
-        resp = [{"error" => error_msg}]
       end
+      @user.title_id = @title.id
     end
-    @user.title_id = @title.id
 
     if @user.save
        return [@user]

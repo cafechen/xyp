@@ -27,7 +27,8 @@ module AuthHandler
       "do_describe_events",
       "do_describe_schools",
       "do_describe_user_by_mobile",
-      "do_describe_user"
+      "do_describe_user",
+      "do_describe_orgs"
     ]
   end
 

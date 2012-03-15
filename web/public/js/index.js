@@ -1,95 +1,69 @@
-function showEvents() {
-	jQuery("#elist").jqGrid({
-		url : '/web/grid_events',
-		datatype : "json",
-		colNames : ['标题', '俱乐部', ''],
-		colModel : [{
-			name : 'title',
-			index : 'title',
-			width : 950 * 30 / 100
-		}, {
-			name : 'org_name',
-			index : 'org_name',
-			width : 950 * 40 / 100
-		}, {
-			name : 'act',
-			index : 'join_event',
-			width : 950 * 30 / 100
-		}],
-		rowNum : 10,
-		height : 'auto',
-		authwidth : 'true',
-		rowList : [10, 20, 30],
-		pager : '#epager',
-		sortname : 'title',
-		viewrecords : true,
-		sortorder : "desc",
-		caption : "活动列表",
-		gridComplete : function() {
-			var ids = jQuery("#elist").jqGrid('getDataIDs');
-			for(var i = 0; i < ids.length; i++) {
-				var cl = ids[i];
-				je = "<input style='height:22px;width:60px;' type='button' value='加入'/>";
-				fe = "<input style='height:22px;width:60px;' type='button' value='关注'/>";
-				jQuery("#elist").jqGrid('setRowData', ids[i], {
-					act : je + fe
-				});
-			}
-		}
-	});
-	jQuery("#elist").jqGrid('navGrid', '#epager', {
-		edit : false,
-		add : false,
-		del : false,
-		search : false
-	});
+function initPage(){
+	if($.cookie('email') && $.cookie('email').split != ""){
+		$("#banner").append('<ul class="top-nav logged_out"> \
+					<li class="login"><a href="#">' + $.cookie('name') + '</a></li> \
+       		<li class="login"><a href="#" onclick="logout()">注销</a></li> \
+       		<li class="login"><a href="/">首页</a></li> \
+    		</ul>'
+    )
+	}else{
+		$("#banner").append('<ul class="top-nav logged_out"> \
+       		<li class="login"><a href="/register.html">注册</a></li> \
+       		<li class="login"><a href="/login.html">登陆</a></li> \
+    		</ul>'
+    )
+	}
+}
 
+function logout(){
+	$.cookie('email',null, {path: '/'}); 
+	$.cookie('name',null, {path: '/'}); 
+	$.cookie('password',null, {path: '/'}); 
+	location.href="/";
 }
 
 function showEvents() {
-	jQuery("#elist").jqGrid({
-		url : '/web/grid_events',
-		datatype : "json",
-		colNames : ['名称', '俱乐部', ''],
-		colModel : [{
-			name : 'title',
-			index : 'title',
-			width : 950 * 30 / 100
-		}, {
-			name : 'org_name',
-			index : 'org_name',
-			width : 950 * 40 / 100
-		}, {
-			name : 'act',
-			index : 'join_event',
-			width : 950 * 30 / 100
-		}],
-		rowNum : 10,
-		height : 'auto',
-		authwidth : 'true',
-		rowList : [10, 20, 30],
-		pager : '#epager',
-		sortname : 'title',
-		viewrecords : true,
-		sortorder : "desc",
-		caption : "活动列表",
-		gridComplete : function() {
-			var ids = jQuery("#elist").jqGrid('getDataIDs');
-			for(var i = 0; i < ids.length; i++) {
-				var cl = ids[i];
-				je = "<input style='height:22px;width:60px;' type='button' value='加入'/>";
-				fe = "<input style='height:22px;width:60px;' type='button' value='关注'/>";
-				jQuery("#elist").jqGrid('setRowData', ids[i], {
-					act : je + fe
-				});
-			}
-		}
-	});
-	jQuery("#elist").jqGrid('navGrid', '#epager', {
-		edit : false,
-		add : false,
-		del : false,
-		search : false
-	});
-
+	url = '/webservice/query' ;
+	cmd = {"cmd":"describe_events"};
+	req = $.toJSON(cmd) ;
+	$.post(url,req, function (data, textStatus, jqXHR){
+		$.each(data,function(n,value){
+			if(n > 2) return ;
+			var $table=$("#events"); 
+			$table.append('<tr class="alt"> \
+	            			<td class="content">' + value['school_name'] + '</td> \
+	            			<td class="content">' + value['org_name'] + '</td> \
+	            			<td class="content">' + value['title'] + '</td> \
+	            			<td class="content">' + value['place'] + '</td> \
+	            			<td class="content">' + value['beginTime'] + '</td> \
+	            			<td class="content">' + value['speaker'] + '</td> \
+	            			<td class="content">14/30</td> \
+	            			<td class="content">抢座</td> \
+	            			<td class="content">关注</td> \
+	        				</tr>');
+		});
+	},"json");
 }
+
+function showOrgs() {
+	url = '/webservice/query' ;
+	cmd = {"cmd":"describe_orgs"};
+	req = $.toJSON(cmd) ;
+	$.post(url,req, function (data, textStatus, jqXHR){
+		$.each(data,function(n,value){
+			console.debug(value);
+			if(n > 2) return ;
+			var $table=$("#orgs"); 
+			$table.append('<tr class="alt"> \
+            <td class="content">清华大学</td> \
+            <td class="content">创投俱乐部</td> \
+            <td class="content">23</td> \
+            <td class="content">23</td> \
+            <td class="content">23</td> \
+            <td class="content">加入</td> \
+            <td class="content">关注</td> \
+          </tr>');
+		});
+	},"json");
+}
+

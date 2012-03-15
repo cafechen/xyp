@@ -1,0 +1,31 @@
+<form action="#" method="post" onsubmit="validate();return false;">
+	<h1>注册</h1>
+    <div class="formbody">
+        
+        <label for="name">
+          用户名<br />
+          <input autocapitalize="off" class="text" id="name" name="name" style="width: 21em;" tabindex="1" type="text" />
+        </label>
+        
+        <label for="email">
+          邮箱<br />
+          <input autocapitalize="off" class="text" id="email" name="email" style="width: 21em;" tabindex="1" type="text" />
+        </label>
+
+        <label for="password">
+          密码
+          <br />
+          <input autocomplete="disabled" class="text" id="password" name="password" style="width: 21em;" tabindex="2" type="password" value="" />
+        </label>
+        
+        <label for="check_password">
+          确认密码
+          <br />
+          <input autocomplete="disabled" class="text" id="check_password" name="check_password" style="width: 21em;" tabindex="2" type="password" value="" />
+        </label>
+
+        <label class='submit_btn'>
+        	<input name="commit" tabindex="3" type="submit" value="提交" />
+        </label>
+    </div>
+</form>
