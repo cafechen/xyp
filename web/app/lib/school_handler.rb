@@ -3,7 +3,7 @@ module SchoolHandler
   def do_create_school(req)
     resp = {}
     @school = School.new()
-    @school.school_name = req['schoolName']
+    @school.name = req['schoolName']
     if @school.save
       resp = [@school]
     else
@@ -36,7 +36,7 @@ module SchoolHandler
     @schools.each do |school|
       resp << {
         "schoolId" => school.id,
-        "schoolName" => school.school_name
+        "schoolName" => school.name
       }    
     end
     return resp
