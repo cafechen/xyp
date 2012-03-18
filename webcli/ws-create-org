@@ -6,10 +6,12 @@ require FILEDIR + "/ws-config"
 require FILEDIR + "/deps/client_utils"
 require FILEDIR + "/deps/ws_adapter"
 
-#USAGE = "USAGE: ws-create-org -n <name> -t <org_type_id>" 
+#USAGE = "USAGE: ws-create-org -n <name> -t <org_type_id> -i <introduce>" 
 
 command_desc={"cmd"=>"create-org",
-               "opts"=> {"name"=>["n",1,""], "org_type_id"=>["t",1,""]}}
+               "opts"=> {"name"=>["n",1,""], 
+               "org_type_id"=>["t",1,""],
+               "introduce"=>["i",1,""]}}
 
 USAGE = Client_Utils.generate_usage(command_desc)
 
@@ -20,11 +22,13 @@ end
 
 opts = GetoptLong.new(
 [ '--name', '-n', GetoptLong::REQUIRED_ARGUMENT ],
-[ '--org_type_id', '-t', GetoptLong::REQUIRED_ARGUMENT ]
+[ '--org_type_id', '-t', GetoptLong::REQUIRED_ARGUMENT ],
+[ '--introduce', '-i', GetoptLong::REQUIRED_ARGUMENT ]
 )
 
 name = nil
 org_type_id = nil
+intro = nil
 
 begin
   opts.each do |opt, arg|
@@ -33,6 +37,8 @@ begin
         name = arg
       when '--org_type_id'
         org_type_id = arg
+      when '--introduce'
+        intro = arg
     end
   end
 rescue GetoptLong::InvalidOption
@@ -50,7 +56,7 @@ end
 
 ws = WSAdapter.new()
 
-resp = ws.create_org(name,org_type_id)
+resp = ws.create_org(name,org_type_id,intro)
 
 if resp.size == 0
   Client_Utils.print_msg("create_fail")	

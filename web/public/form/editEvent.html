@@ -1,0 +1,76 @@
+<h3>修改活动</h3>
+<div class="boxed-group-inner">
+  <div id="new_key_form_wrap" class="body">
+  		<input id="eventId" name="eventId" size="30" type="hidden"/>
+  		
+  		<dl class="form">
+		    <dt><label>所属俱乐部</label></dt>
+		    <dd><input id="orgName" name="orgName" size="30" type="text" readonly/></dd>
+		  </dl>
+  	
+			<dl class="form">
+		    <dt><label>活动名称</label></dt>
+		    <dd><input id="title" name="title" size="30" type="text" /></dd>
+		  </dl>
+		  		  
+		  <dl class="form">
+		    <dt><label>活动地点</label></dt>
+		    <dd><input id="place" name="place" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>主讲人</label></dt>
+		    <dd><input id="speaker" name="speaker" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>主讲人信息</label></dt>
+		    <dd><textarea class="key_value" cols="40" id="speakerInfo" name="speakerInfo" rows="20"></textarea></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>主办方</label></dt>
+		    <dd><input id="sponsor" name="sponsor" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>承办方</label></dt>
+		    <dd><input id="undertaker" name="undertaker" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>协办方</label></dt>
+		    <dd><input id="cooperater" name="cooperater" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>参与人数</label></dt>
+		    <dd><input id="seat" name="seat" size="30" type="text" /></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>活动开始时间(格式:YYYY-MM-DD HH:MM:SS)</label></dt>
+		    <dd><input type="text" id="beginTime" name="beginTime"/></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>活动结束时间(格式:YYYY-MM-DD HH:MM:SS)</label></dt>
+		    <dd><input type="text" id="endTime" name="endTime"/></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>活动简介</label></dt>
+		    <dd><textarea class="key_value" cols="40" id="brief" name="brief" rows="20"></textarea></dd>
+		  </dl>
+		  
+		  <dl class="form">
+		    <dt><label>其它</label></dt>
+		    <dd><textarea class="key_value" cols="40" id="others" name="others" rows="20"></textarea></dd>
+		  </dl>
+
+      <p>
+        <button type="submit" class="classy primary" onclick="submitModifyEvent();"><span>提交</span></button>
+        <button type="submit" class="classy primary" onclick="closeEvent();"><span>取消</span></button>
+      </p> 
+	</div>
+</div>

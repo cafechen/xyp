@@ -33,6 +33,8 @@ module OrgHandler
     @org.school_id = @user.school_id
     @org.school_name = @user.school
     @org.chairman = @user.name
+    @org.email = @user.email
+    @org.intro = req['intro']
     @org.events = 0
     @org.followed = 0
     @org.joined = 0
@@ -65,7 +67,48 @@ module OrgHandler
     return resp
   end
   
+  def do_modify_org(req)
+    
+    resp = {}
+    
+    @hasOrg = Org.find(req['orgId'])
+
+    if @hasOrg.nil?
+      return [{"error" => "This organization is not exist!"}]
+    end
+        
+    @user = User.find_by_email(req['email'])
+    
+    if @user.nil?
+      return [{"error" => "The user #{email} is not exist!"}]
+    end
+    
+    unless @hasOrg.email == @user.email
+      return [{"error" => "This club is not belong to you!"}]
+    end
+
+    @hasOrg.name = req['name']
+    @hasOrg.intro = req['intro']
+
+    if @hasOrg.save
+      return [@hasOrg]
+    else
+      error_msg = ""
+      @org.errors.full_messages.each do |msg|
+        error_msg = msg
+      end
+      return [{"error" => error_msg}]
+    end
+  end
+  
   def do_describe_orgs(req)
+    unless req['owner'].nil? or req['owner'].empty?
+      return Org.where(:email => req['owner'])
+    end
+    @orgs = Org.all
+  end
+  
+  def do_describe_own_orgs(req)
     @orgs = Org.all
   end
   

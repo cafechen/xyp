@@ -31,10 +31,19 @@ module UserHandler
     
     if req['getEvents'] != nil and req['getEvents'] == "true"
       unless @user.nil?
-        @follows = Event.find_by_sql("select events.* from events left join user_events on events.id = user_events.id where user_events.user_id = #{@user.id} and user_events.status = #{FOLLOW_EVENT}")
-        @joins = Event.find_by_sql("select events.* from events left join user_events on events.id = user_events.id where user_events.user_id = #{@user.id} and user_events.status = #{JOIN_EVENT}")  
+        @follows = Event.find_by_sql("select events.*,user_events.event_id from events left join user_events on events.id = user_events.event_id where user_events.user_id = #{@user.id} and user_events.status = #{FOLLOW_EVENT}")
+        @joins = Event.find_by_sql("select events.*,user_events.event_id from events left join user_events on events.id = user_events.event_id where user_events.user_id = #{@user.id} and user_events.status = #{JOIN_EVENT}")  
         resp['follow_events'] = @follows
         resp['join_events'] = @joins
+      end
+    end
+    
+    if req['getOrgs'] != nil and req['getOrgs'] == "true"
+      unless @user.nil?
+        @members = Event.find_by_sql("select orgs.*,user_orgs.org_id from orgs left join user_orgs on orgs.id = user_orgs.org_id where user_orgs.user_id = #{@user.id} and user_orgs.role_id = #{MEMBER_ROLE}")
+        @fans = Event.find_by_sql("select orgs.*,user_orgs.org_id from orgs left join user_orgs on orgs.id = user_orgs.org_id where user_orgs.user_id = #{@user.id} and user_orgs.role_id = #{FANS_ROLE}") 
+        resp['follow_orgs'] = @fans
+        resp['join_orgs'] = @members
       end
     end
 
@@ -135,6 +144,95 @@ module UserHandler
       @user.title_id = @title.id
     end
 
+    if @user.save
+       return [@user]
+    else
+      error_msg = ""
+      @user.errors.full_messages.each do |msg|
+        error_msg = msg
+      end
+      resp = [{"error" => error_msg}]
+    end
+    return resp
+  end
+  
+  def do_modify_user(user)
+    resp = {}
+    
+    @user = User.find_by_email(user['email']) ;
+    @user.mobile = user['mobile'] unless user['mobile'].nil?
+    @user.workstate = user['workstate'] unless user['workstate'].nil?
+    @user.school = user['school'] unless user['school'].nil?
+    @user.company = user['company'] unless user['company'].nil?
+    @user.title = user['title'] unless user['title'].nil?
+    @user.intro = user['intro'] unless user['intro'].nil?
+    
+    unless @user.school.nil? or @user.school.empty?
+      @school = School.find_by_name(@user.school)
+      if @user.school.nil? == false and @school.nil?
+        @school = School.new
+        @school.name = @user.school
+        unless @school.save
+          error_msg = ""
+          @school.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
+        end
+      end
+      @user.school_id = @school.id ;
+    end
+    
+    unless @user.company.nil? or @user.company.empty?
+      @company = Company.find_by_name(@user.company) unless @user.company.nil?
+      if @user.company.nil? == false and @company.nil?
+        @company = Company.new
+        @company.name = @user.company
+        unless @company.save
+          error_msg = ""
+          @company.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
+        end
+      end
+      @user.company_id = @company.id
+    end
+
+    unless @user.title.nil? or @user.title.empty?
+      @title = Title.find_by_name(@user.title) unless @user.title.nil?
+      if @user.title.nil? == false and @title.nil?
+        @title = Title.new
+        @title.name = @user.title
+        unless @title.save
+          error_msg = ""
+          @title.errors.full_messages.each do |msg|
+            error_msg = msg
+          end
+          resp = [{"error" => error_msg}]
+        end
+      end
+      @user.title_id = @title.id
+    end
+
+    if @user.save
+       return [@user]
+    else
+      error_msg = ""
+      @user.errors.full_messages.each do |msg|
+        error_msg = msg
+      end
+      resp = [{"error" => error_msg}]
+    end
+    return resp
+  end
+  
+  def do_modify_password(cmd)
+    resp = {}
+    
+    @user = User.find_by_email(cmd['email']) ;
+    @user.password = cmd['newPassword'];
+        
     if @user.save
        return [@user]
     else

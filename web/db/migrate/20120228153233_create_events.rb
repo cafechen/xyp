@@ -19,6 +19,7 @@ class CreateEvents < ActiveRecord::Migration
       t.text :others
       t.datetime :beginTime
       t.datetime :endTime
+      t.string :email
 
       t.timestamps
     end

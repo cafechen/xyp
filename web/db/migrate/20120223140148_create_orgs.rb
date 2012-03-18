@@ -10,6 +10,8 @@ class CreateOrgs < ActiveRecord::Migration
       t.integer :followed
       t.integer :joined
       t.string :chairman
+      t.string :intro
+      t.string :email
       
       t.timestamps
     end

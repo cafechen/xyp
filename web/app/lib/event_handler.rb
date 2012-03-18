@@ -41,6 +41,52 @@ module EventHandler
     @event.org_id = @org.id
     @event.org_name = @org.name
     @event.status = 0
+    @event.email = @user.email
+    
+    if @event.save
+      return [@event]
+    else
+      error_msg = ""
+      @event.errors.full_messages.each do |msg|
+        error_msg = msg
+      end
+      return [{"error" => error_msg}]
+    end
+    
+  end
+  
+  def do_modify_event(req)
+    
+    #Check if the user is a org admin
+    
+    @user = User.find_by_email(req['email'])
+    
+    if @user.nil?
+      return {"error"=>"User is not exist!"}
+    end
+    
+    @event = Event.find(req['eventId'])
+    
+    if @event.nil? 
+      return {"error"=>"Event is not exist!"}
+    end
+
+    @event.title = req['title']
+    @event.place = req['place']
+    @event.speaker = req['speaker']
+    @event.speakerInfo = req['speakerInfo']
+    @event.sponsor = req['sponsor']
+    @event.undertaker = req['undertaker']
+    @event.cooperater = req['cooperater']
+    @event.seat = req['seat']
+    @event.brief = req['brief']
+    @event.toward = req['toward']
+    @event.others = req['others']
+    @event.beginTime = req['beginTime']
+    @event.endTime = req['endTime']
+    @event.status = 0
+    
+    puts @event.inspect
     
     if @event.save
       return [@event]
@@ -70,6 +116,9 @@ module EventHandler
   def do_describe_events(req)
     if !req.nil? and !req['filter'].nil? and !req['filter'].empty? and req['filter'] != ""
       return Event.find(:all, :conditions => "title like '%#{req['filter']}%'")
+    end
+    if !req.nil? and !req['owner'].nil? and !req['owner'].empty? and req['owner'] != ""
+      return Event.where(:email => req['owner']);
     end
     Event.all
   end

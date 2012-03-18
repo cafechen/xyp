@@ -4,12 +4,13 @@ module Org
   ## Org functions
   ###########################################################
   
-  def create_org(name,org_type_id)
+  def create_org(name,org_type_id,intro)
     
     data = {
       "cmd" => "create_org",
       "name" => name,
-      "org_type_id" => org_type_id
+      "org_type_id" => org_type_id,
+      "intro" => intro
     }
     
     send_data(data)
@@ -17,10 +18,27 @@ module Org
     process_exception($!)
   end
   
-  def describe_orgs()
+  def modify_org(name,orgId,intro)
+   
+    data = {
+      "cmd" => "modify_org",
+      "name" => name,
+      "orgId" => orgId,
+      "intro" => intro
+    }
+    
+    send_data(data)
+  rescue
+    process_exception($!)
+  end
+  
+  def describe_orgs(owner=nil)
+    
     data = {
       "cmd" => "describe_orgs"
     }
+    
+    data['owner'] = owner unless owner.nil?
     
     send_data(data)
   rescue

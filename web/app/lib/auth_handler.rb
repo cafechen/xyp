@@ -52,7 +52,11 @@ module AuthHandler
       "do_exit_org",
       "do_unfollow_org",
       "do_create_event",
-      "do_describe_user"
+      "do_describe_user",
+      "do_modify_user",
+      "do_modify_password",
+      "do_modify_org",
+      "do_modify_event",
     ]
   end
 
@@ -87,8 +91,11 @@ module AuthHandler
       "do_unfollow_event",
       "do_exit_org",
       "do_unfollow_org",
-      "do_describe_user"
-
+      "do_describe_user",
+      "do_modify_user",
+      "do_modify_password",
+      "do_modify_org",
+      "do_modify_event"
     ]
   end
   

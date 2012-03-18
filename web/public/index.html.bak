@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>学院派</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link href="/stylesheets/bundles/github.css" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/stylesheets/bundles/github2.css" media="screen" rel="stylesheet" type="text/css" />
+		<script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+		<script src="/js/github.js" type="text/javascript"></script>
+		<script type="text/javascript" src="js/jquery.json-2.3.min.js"></script>
+		<script src="/js/index.js" type="text/javascript"></script>
+	</head>
+	<script type="text/javascript">
+    jQuery(document).ready(function() {
+    	console.debug("Ready");
+    	initPage();
+      showEvents();
+      showOrgs();
+    });
+  </script>
+  <body class="logged_in page-dashboard   env-production" data-blob-contribs-enabled="yes">
+		<div id="header" class="true clearfix">
+			<div id='banner' class="container clearfix">
+				<div class="topsearch ">
+					<form action="#" id="top_search_form" method="get">
+						<div class="search placeholder-field js-placeholder-field">
+							<label class="placeholder" for="global-search-field">搜索…</label>
+							<input type="text" class="search my_repos_autocompleter" id="global-search-field" name="q" results="5" spellcheck="false" autocomplete="off" data-autocomplete="my-repos-autocomplete">
+							<div id="my-repos-autocomplete" class="autocomplete-results">
+								<ul class="js-navigation-container"></ul>
+							</div>
+							<input type="submit" value="Search" class="button">
+						</div>
+						<input type="hidden" name="type" value="Everything" />
+						<input type="hidden" name="repo" value="" />
+						<input type="hidden" name="langOverride" value="" />
+						<input type="hidden" name="start_value" value="1" />
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="site" itemscope itemtype="http://schema.org/WebPage">
+    <div class="container">
+      <div class="pagehead repohead instapaper_ignore readability-menu">
+				<ul class="tabs">
+    			<li><a href="#" class="selected" highlight="repo_sourcerepo_downloadsrepo_commitsrepo_tagsrepo_branches">首页</a></li>
+    			<li><a href="#" highlight="repo_networkrepo_fork_queue">我的首页</a></li>
+    			<li><a href="#" highlight="repo_pulls">我的团体</a></li>
+					<li><a href="#" highlight="repo_issues">创建团体</a></li>
+      		<li><a href="#" highlight="repo_wiki">寻找团体</a></li>
+    			<li><a href="#" highlight="repo_graphsrepo_contributors">我的活动</a></li>
+    			<li><a href="#" highlight="repo_graphsrepo_contributors">创建活动</a></li>
+    			<li><a href="#" highlight="repo_graphsrepo_contributors">寻找活动</a></li>
+				</ul>
+				<div id="slider">
+					<br style="clear:both;">
+      		<div class="breadcrumb" data-path="/">
+        		<b itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">最热活动</span></a></b>
+      		</div>
+  				<div class="frames">
+    				<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+      			<div class="bubble tree-browser-wrapper">
+      			<table id="events" class="tree-browser" cellpadding="0" cellspacing="0">
+        			<thead>
+        				<tr class="header">
+          				<th>学校</th>
+          				<th>团体</th>
+         	 				<th>活动</th>
+          				<th>地点</th>
+          				<th>时间</th>
+          				<th>主讲</th>
+          				<th>席位</th>
+          				<th></th>
+          				<th><div class="history"><a href="#" rel="nofollow">more</a></div></th>
+        				</tr>
+        			</thead>
+        			<tbody>
+          	  </tbody>
+						</table>
+      		</div>
+  			</div>
+  		</div>
+  				<div class="breadcrumb" data-path="/">
+        		<b itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">活跃团体</span></a></b>
+      		</div>
+  				<div class="frames">
+    				<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+      				<div class="bubble tree-browser-wrapper">
+      					<table id="orgs" class="tree-browser" cellpadding="0" cellspacing="0">
+        					<thead>
+        						<tr class="header">
+		          				<th>学校</th>
+							        <th>团体</th>
+							        <th>活动</th>
+							        <th>成员</th>
+							        <th>粉丝</th>
+							        <th></th>
+							        <th>
+							          <div class="history">
+							            <a href="#" rel="nofollow">more</a>
+							          </div>
+							        </th>
+		        				</tr>
+        					</thead>
+		        			<tbody>
+					        </tbody>
+								</table>
+      				</div>
+  					</div>
+  				</div>
+		  		<br style="clear:both;">
+					<br style="clear:both;">
+				</div>
+			</div>
+		</div> <!-- constainer-->
+			<div id='footer'>
+				<div class="upper_footer">	
+	  			<div class="container clearfix">
+	  				<p align="center"> © 2012 学院派 Inc. All rights reserved </p>
+	      	</div>
+				</div>
+			</div>
+			<div class="ajax-error-message">
+				<p>
+					<span class="icon"></span> Something went wrong with that request. Please try again. <a href="javascript:;" class="ajax-error-dismiss">Dismiss</a>
+				</p>
+			</div>
+		</div> <!-- site -->
+	</body>
+</html>

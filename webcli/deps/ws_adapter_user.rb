@@ -39,17 +39,30 @@ module User
 
   def register_user(data)
    
-    data["password"] = Digest::MD5.hexdigest(data['password'])
     data['cmd'] = "register_user"
+    data['password'] = Digest::MD5.hexdigest(data['password'])
         
     send_data(data)
   end
+  
+  def modify_user(data)
+    data['cmd'] = "modify_user"
+    
+    send_data(data) 
+  end
+  
+  def modify_password(data)
+    data['cmd'] = "modify_password"
+    data['newPassword'] = Digest::MD5.hexdigest(data['newPassword'])
+    send_data(data) 
+  end
+
   
   def create_user(email,password,name,mobile=nil)
     
     user_hash = Hash.new()
     user_hash["email"] = email
-    user_hash["password"] = password
+    user_hash["password"] = Digest::MD5.hexdigest(password)
     user_hash["name"] = name
     user_hash["mobile"] = mobile if !mobile.nil?
     

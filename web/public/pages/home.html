@@ -1,0 +1,171 @@
+<div class="pagehead userpage">
+  <ul class="pagehead-actions">
+  	<li><a href="#" class="minibutton btn-editprofile" onclick='toEditProfile()'><span>修改个人信息</span></a></li>
+  </ul>
+  <h1 class="avatared">
+      <span class="tooltipped downwards" title=""><a href="#"><img height="48" src="/images/gravatars/gravatar-140.png" width="48" /></a></span>
+    <!-- <span id='spanName' itemprop="name" class="username"></span> -->
+  </h1>
+</div><!-- /.pagehead -->
+
+<div class="rule"></div>
+
+<div data-name="fat" class="columns profilecols">
+	
+  <div id='first_vcard' class="first vcard">
+  </div><!-- /.first -->
+  
+  <div id='last' class="last">
+    <ul class="stats">
+      <li>
+        <a href="#">
+
+          <strong>0</strong>
+          <span>关注活动数量</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <strong>0</strong>
+          <span>粉丝</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="following">
+      <h3>部分粉丝... <a href="#">浏览全部 →</a></h3>
+      <ul class="avatars">
+
+          <li>
+            <a title="kamicane" itemprop="follows" href="/kamicane"><img width="24" height="24" src="/images/gravatars/gravatar-140.png"/></a>
+          </li>
+      </ul>
+    </div>
+  </div><!-- /.last -->
+</div><!-- /.columns.profilecols -->
+
+<div class="rule"></div>
+
+<div class="subnav-bar">
+	<ul class="subnav with-scope">
+		<li>
+			<a id="followE" class="selected" href="#" onclick="showFollowEvents();return false;">我关注的活动</a>
+		</li>
+		<li>
+			<a id="joinE" href="#" onclick="showJoinEvents();return false;">我报名的活动</a>
+		</li>
+	</ul>
+</div>
+
+<div class="frames">
+	<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+		<div class="bubble tree-browser-wrapper">
+			<table class="tree-browser" cellpadding="0" cellspacing="0">
+  			<thead>
+  				<tr class="header">
+    				<th>学校</th>
+    				<th>团体</th>
+   	 				<th>活动</th>
+    				<th>地点</th>
+    				<th>时间</th>
+    				<th>主讲</th>
+    				<th>席位</th>
+    				<th></th>
+  				</tr>
+  			</thead>
+  			<tbody id="myevents">
+    	  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="subnav-bar">
+	<ul class="subnav with-scope">
+		<li>
+			<a id="followC" class="selected" href="#" onclick="showFollowClubs();return false;">我关注的俱乐部</a>
+		</li>
+		<li>
+			<a id="joinC" href="#" onclick="showJoinClubs();return false;">我加入的俱乐部</a>
+		</li>
+	</ul>
+</div>
+
+<div class="frames">
+	<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+		<div class="bubble tree-browser-wrapper">
+			<table class="tree-browser" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr class="header">
+    				<th>学校</th>
+		        <th>团体</th>
+		        <th>活动</th>
+		        <th>成员</th>
+		        <th>粉丝</th>
+		        <th></th>
+  				</tr>
+				</thead>
+  			<tbody id="myorgs">
+        </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="rule"></div>
+
+<div class="breadcrumb" data-path="/">
+	<b itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">最热活动</span></a></b>
+</div>
+<div class="frames">
+	<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+		<div class="bubble tree-browser-wrapper">
+			<table id="events" class="tree-browser" cellpadding="0" cellspacing="0">
+  			<thead>
+  				<tr class="header">
+    				<th>学校</th>
+    				<th>团体</th>
+   	 				<th>活动</th>
+    				<th>地点</th>
+    				<th>时间</th>
+    				<th>主讲</th>
+    				<th>席位</th>
+    				<th></th>
+    				<th><div class="history"><a href="#" rel="nofollow">more</a></div></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+    	  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="breadcrumb" data-path="/">
+	<b itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">活跃团体</span></a></b>
+</div>
+<div class="frames">
+	<div class="frame frame-center" data-path="/" data-permalink-url="" data-title="" data-type="tree" data-cached-commit-url="">
+		<div class="bubble tree-browser-wrapper">
+			<table id="orgs" class="tree-browser" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr class="header">
+    				<th>学校</th>
+		        <th>团体</th>
+		        <th>活动</th>
+		        <th>成员</th>
+		        <th>粉丝</th>
+		        <th></th>
+		        <th>
+		          <div class="history">
+		            <a href="#" rel="nofollow">more</a>
+		          </div>
+		        </th>
+  				</tr>
+				</thead>
+  			<tbody>
+        </tbody>
+			</table>
+		</div>
+	</div>
+</div>
